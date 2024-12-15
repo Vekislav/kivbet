@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Website</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1f26;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            padding: 50px;
+            background-color: #1c1g22;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2px; /* Normalized top margin */
+        }
+
+        .navbar input {
+            width: 80%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            text-align: center;
+            background-color: #333842;
+            color: white;
+            outline: none;
+            transition: box-shadow 0.3s ease-in-out;
+            margin-bottom: 2px; /* Spacing between search bar and categories */
+        }
+
+        .navbar input:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .categories {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .categories button {
+            padding: 10px 20px;
+            background-color: #3d414e;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .categories button:hover {
+            background-color: #555a6b;
+        }
+
+        .categories button.active {
+            background-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 games per row */
+            gap: 15px; /* Reduced gap between games */
+            padding: 0 200px; /* Increased padding on the left and right */
+            width: 100%;
+            max-width: 1200px; /* Added a maximum width to keep the games centered */
+            box-sizing: border-box;
+            justify-content: center; /* Centering the games grid */
+            margin-bottom: 50px; /* Space between games and footer */
+        }
+
+        .game-card {
+            background-color: #2a2f3a;
+            border-radius: 12px; /* Rounded corners */
+            overflow: hidden;
+            text-align: center;
+            padding: 0;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            cursor: pointer;
+            width: 130px; /* Fixed width */
+            height: 175px; /* Fixed height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1; /* Ensure all cards are visible initially */
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .game-card img {
+            width: 130px; /* Fixed image width */
+            height: 175px; /* Fixed image height */
+            object-fit: cover;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .game-card p {
+            display: none; /* Make the text invisible */
+        }
+
+        /* Add a separation line between game rows */
+        .game-card:nth-child(n+6) {
+            border-top: 2px solid #333842; /* Separation line after 5th item (next row) */
+        }
+
+        .empty-slot {
+            background-color: #3a3f4b;
+            border-radius: 12px; /* Rounded corners */
+            height: 175px;
+            width: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        footer {
+            margin-top: 20px;
+            background-color: #252a34;
+            padding: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        footer button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .navbar input {
+                width: 80%;
+            }
+
+            .categories button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(5, 1fr); /* Keep 5 games per row on tablets and above */
+                gap: 20px; /* Consistent gap on tablets */
+                padding: 0 40px; /* Adjust padding for tablets */
+            }
+
+            .game-card {
+                width: 130px; /* Fixed width */
+                height: 175px; /* Fixed height */
+            }
+
+            .game-card img {
+                width: 130px;
+                height: 175px;
+            }
+
+            .empty-slot {
+                height: 175px;
+                width: 130px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 games per row on mobile */
+                padding: 0 20px; /* Adjust padding for mobile */
+            }
+
+            .categories {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            footer {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <input type="text" id="search" placeholder="Search your game..." oninput="filterGames()">
+        <div class="categories">
+            <button onclick="filterByCategory('all')" class="active" id="all-category">Everything</button>
+            <button onclick="filterByCategory('stake-originals')" id="stake-originals-category">KIVbet Originals</button>
+            <button onclick="filterByCategory('slots')" id="slots-category">Slots by KIV</button>
+        </div>
+    </div>
+
+    <div class="game-grid" id="gameGrid">
+        <!-- Stake Originals -->
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Dice">
+            <p>Dice</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Crash">
+            <p>Crash</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Plinko">
+            <p>Plinko</p>
+        </div>
+
+        <!-- Slots -->
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Blackjack">
+            <p>Blackjack</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Baccarat">
+            <p>Baccarat</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Roulette">
+            <p>Roulette</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Limbo">
+            <p>Limbo</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="Mines">
+            <p>Mines</p>
+        </div>
+        <div class="game-card" data-category="stake-originals">
+            <img src="https://via.placeholder.com/130x175" alt="HILO">
+            <p>HILO</p>
+        </div>
+
+        <!-- Slots -->
+        <div class="game-card" data-category="slots">
+            <img src="https://via.placeholder.com/130x175" alt="Sweet Bonanza">
+            <p>Sweet Bonanza</p>
+        </div>
+        <div class="game-card" data-category="slots">
+            <img src="https://via.placeholder.com/130x175" alt="Gates of Olympus">
+            <p>Gates of Olympus</p>
+        </div>
+        <div class="game-card" data-category="slots">
+            <img src="https://via.placeholder.com/130x175" alt="Wanted Dead or Alive">
+            <p>Wanted Dead or Alive</p>
+        </div>
+    </div>
+
+    <script>
+        function filterGames() {
+            const searchQuery = document.getElementById('search').value.toLowerCase();
+            const gameCards = document.querySelectorAll('.game-card');
+
+            let relevantGames = [];
+            let irrelevantGames = [];
+
+            gameCards.forEach(card => {
+                const gameName = card.querySelector('p').textContent.toLowerCase();
+                if (gameName.includes(searchQuery)) {
+                    relevantGames.push(card);
+                    card.style.opacity = 1; // Show the game card
+                    card.style.transition = 'opacity 0.3s ease-in-out'; // Smooth opacity transition
+                } else {
+                    irrelevantGames.push(card);
+                    card.style.opacity = 0; // Hide the game card
+                    card.style.transition = 'opacity 0.3s ease-in-out'; // Smooth opacity transition
+                }
+            });
+
+            // Move relevant games to the left
+            relevantGames.forEach(game => {
+                document.getElementById('gameGrid').prepend(game); // Move the relevant game to the start
+            });
+
+            // Ensure irrelevant games remain after the relevant ones
+            irrelevantGames.forEach(game => {
+                document.getElementById('gameGrid').appendChild(game); // Move irrelevant games to the end
+            });
+        }
+
+        function filterByCategory(category) {
+            const gameCards = document.querySelectorAll('.game-card');
+            const allButtons = document.querySelectorAll('.categories button');
+
+            allButtons.forEach(button => button.classList.remove('active'));
+
+            if (category === 'all') {
+                document.getElementById('all-category').classList.add('active');
+            } else if (category === 'stake-originals') {
+                document.getElementById('stake-originals-category').classList.add('active');
+            } else if (category === 'slots') {
+                document.getElementById('slots-category').classList.add('active');
+            }
+
+            gameCards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';  // Show the game card
+                    card.style.opacity = 1;  // Make sure it's visible
+                } else {
+                    card.style.display = 'none';   // Hide the game card
+                    card.style.opacity = 0;        // Fade out
+                }
+            });
+        }
+    </script>
+</body>
+</html>
