@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blackjack Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="game-container">
+    <!-- Sidebar for actions -->
+    <div id="sidebar">
+  <h2>Place Bet</h2>
+  <div class="bet-container">
+    <input type="number" id="bet-input" placeholder="Enter your bet" />
+    <button id="bet-btn" class="action-btn">Place Bet</button>
+  </div>
+  <button id="hit-btn" class="action-btn">Hit</button>
+  <button id="stand-btn" class="action-btn">Stand</button>
+  <button id="double-btn" class="action-btn green">Double</button>
+  <button id="split-btn" class="action-btn" disabled>Split *IN WORKS*</button>
+
+</div>
+
+
+    <!-- Game Table -->
+    <div id="game-table">
+      <div id="dealer-area">
+        <h3>Dealer's Cards</h3>
+        <div id="dealer-cards" class="card-container"></div>
+      </div>
+
+      <div id="player-area">
+        <h3>Your Cards</h3>
+        <div id="player-cards" class="card-container"></div>
+      </div>
+
+      <div id="bet-container">
+        <div id="bet-amount">Balance: <span id="balance"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

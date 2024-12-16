@@ -1,0 +1,152 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #101826;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#game-container {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background: #101826;
+}
+
+#sidebar {
+  width: 20%;
+  background: #101826;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+  border-radius: 10px 0 0 10px;
+}
+
+#sidebar h2 {
+  margin: 0;
+  text-align: center;
+}
+
+.action-btn {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.action-btn:hover {
+  background: #444;
+}
+
+.action-btn.green {
+  background: #28a745;
+}
+
+.action-btn.green:hover {
+  background: #218838;
+}
+
+.bet-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+}
+
+#bet-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #336a7a;
+  border-radius: 5px;
+  width: 80%;
+  text-align: center;
+  background-color: #334d7a;
+  color: white;
+  margin-bottom: 10px;
+}
+
+#bet-input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+#bet-btn {
+  width: 80%;
+}
+
+/* Game Table */
+#game-table {
+  flex-grow: 1;
+  background: #101826;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 0 10px 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+#balance-container h3 {
+  font-size: 24px;
+  color: #334d7a; /* Gold color */
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+#dealer-area, #player-area {
+  width: 90%;
+  text-align: center;
+}
+
+#dealer-cards, #player-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+/* Card Styles */
+.card {
+  width: 60px;
+  height: 90px;
+  background: #19585e;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  animation: deal-card 0.5s ease-out;
+}
+
+@keyframes deal-card {
+  from {
+    transform: translateY(-50px) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+button:disabled {
+  background-color: #444;
+  cursor: not-allowed;
+}
