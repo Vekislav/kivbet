@@ -1,0 +1,172 @@
+/* Reset basic styles */
+body, html {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1c23; /* Original dark background */
+  color: white;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  background-color: #384956;
+  color: white;
+  padding: 15px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  margin-top: 50px;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #2f3d47;
+  color: white;
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+}
+
+.sidebar.slim {
+  width: 33px;
+}
+
+.sidebar.hidden {
+  display: none;
+}
+
+.sidebar .toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar ul li a img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #1a1c23; /* Same dark background as before */
+}
+
+/* Centered iframe with text */
+.iframe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.custom-iframe {
+  width: 1000px;
+  height: 500px;
+  border: 6px #1c2f3;
+  border-radius: 15px;
+  margin: 20px 0;
+  max-width: 95%;
+  background-color: #000; /* Ensures iframe matches the theme */
+}
+
+.iframe-text {
+  color: #1c2c23;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: -15px;
+}
+
+/* Bottom navigation styling */
+.bottom-nav {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  justify-content: space-around;
+  align-items: center;
+  padding: 13px;
+  z-index: 999;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.bottom-nav button img {
+  width: 32px;
+  height: 32px;
+}
+
+.bottom-center-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .bottom-nav {
+    display: flex;
+  }
+
+  .custom-iframe {
+    width: 90%;
+    height: 250px;
+  }
+}
