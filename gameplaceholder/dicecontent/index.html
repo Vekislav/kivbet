@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIVBet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <img src="kivbet.png" alt="Logo" class="logo">
+    <div class="title">Wallet</div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+      <ul>
+        <li><a href="https://kiv.bet/landingpage/"><img src="link1.png" alt="Link 1" class="icon"><span>Link 1</span></a></li>
+        <li><a href="#"><img src="link2.png" alt="Link 2" class="icon"><span>Link 2</span></a></li>
+        <li><a href="#"><img src="link3.png" alt="Link 3" class="icon"><span>Link 3</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="iframe-container">
+        <iframe src="https://kiv.bet/games/blackjack" class="custom-iframe" id="iframe"></iframe>
+        <div class="iframe-text">KIVbet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav" id="bottomNav">
+    <button><img src="link1.png" alt="Link 1"></button>
+    <button><img src="link2.png" alt="Link 2"></button>
+    
+    <button><img src="accountlogo.png" alt="Account"></button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
