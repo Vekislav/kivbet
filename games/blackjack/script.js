@@ -133,12 +133,13 @@ hitBtn.addEventListener('click', () => {
 // Player stands (ends their turn for the current hand)
 standBtn.addEventListener('click', () => {
   if (!gameInProgress) return; // Prevent action if no game is in progress
+
+  // Check if there are more hands to play after the current one
   if (currentHandIndex < playerHands.length - 1) {
-    // Move to the next hand if there are more hands to play
-    currentHandIndex++;
-    renderPlayerHands(); // Render the next hand
+    currentHandIndex++; // Move to the next hand
+    renderPlayerHands();
   } else {
-    // Proceed with the dealer's turn after all hands have been played
+    // No more hands, so dealer plays
     const dealerScore = calculateScore(dealerHand);
     let playerScore = calculateScore(playerHands[currentHandIndex]);
 
