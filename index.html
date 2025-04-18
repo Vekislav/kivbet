@@ -1,104 +1,49 @@
-import React, { useMemo, useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Star } from "lucide-react";
-import { motion } from "framer-motion";
-
-const reviews = [
-  { name: "TrainWrecksTV.", text: "I streamed here and got pretty good odds, could be better.. but still nice", rating: 4 },
-  { name: "Adin Ross", text: "Nice", rating: 5 },
-  { name: "TOGI - Shane Stoffer", text: "Pretty good odds and fast payouts", rating: 4 },
-  { name: "Ivan K.", text: "I love the payment methods that they accept", rating: 5 },
-  { name: "Bore B.", text: "Could use a few more features, but still solid.", rating: 4 }
-];
-
-const Review = ({ name, text, rating }) => (
-  <Card className="w-full max-w-md bg-white shadow-xl p-2">
-    <CardContent className="p-4">
-      <p className="text-lg font-semibold mb-1">{name}</p>
-      <p className="text-sm text-gray-600 mb-2">{text}</p>
-      <div className="flex items-center">
-        {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            className={`h-4 w-4 ${i < rating ? "text-yellow-400" : "text-gray-300"}`}
-            fill={i < rating ? "#facc15" : "none"}
-          />
-        ))}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown and Rating</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="countdown-container">
+      <h1 class="countdown-title">Countdown to the REOPENING</h1>
+      <div id="countdown" class="countdown">
+        <div class="time-unit" id="days">
+          <span class="number">00</span><span>d</span>
+        </div>
+        <div class="time-unit" id="hours">
+          <span class="number">00</span><span>h</span>
+        </div>
+        <div class="time-unit" id="minutes">
+          <span class="number">00</span><span>m</span>
+        </div>
+        <div class="time-unit" id="seconds">
+          <span class="number">00</span><span>s</span>
+        </div>
       </div>
-    </CardContent>
-  </Card>
-);
-
-const Countdown = () => {
-  const calculateTimeLeft = () => {
-    const targetDate = new Date("2025-05-05T00:00:00").getTime();
-    const now = new Date().getTime();
-    const difference = targetDate - now;
-
-    if (difference <= 0) return null;
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / 1000 / 60) % 60);
-    const seconds = Math.floor((difference / 1000) % 60);
-
-    return { days, hours, minutes, seconds };
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  if (!timeLeft) return <p className="text-white text-center text-lg">We're open!</p>;
-
-  return (
-    <p className="text-white text-center text-lg mb-4">
-      Reopening soon – {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
-    </p>
-  );
-};
-
-export default function KivBetPage() {
-  const positions = useMemo(() => {
-    const zones = [
-      { top: [5, 25], left: [5, 30] },
-      { top: [5, 25], left: [35, 65] },
-      { top: [30, 50], left: [10, 40] },
-      { top: [30, 60], left: [50, 80] },
-      { top: [60, 80], left: [25, 60] },
-    ];
-    return zones.map(zone => ({
-      top: `${Math.random() * (zone.top[1] - zone.top[0]) + zone.top[0]}%`,
-      left: `${Math.random() * (zone.left[1] - zone.left[0]) + zone.left[0]}%`,
-    }));
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-black relative overflow-hidden flex flex-col">
-      <h1 className="text-5xl font-bold text-white text-center pt-12">KIV.bet</h1>
-      <Countdown />
-      <div className="relative flex-1 w-full h-full mt-4">
-        {reviews.map((review, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{ top: positions[i].top, left: positions[i].left }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: i * 0.3 }}
-          >
-            <Review {...review} />
-          </motion.div>
-        ))}
-      </div>
-      <footer className="text-white text-center py-6 text-sm opacity-70">
-        KIVbet is owned and operated by Natural Nine B.V., Curaçao company registration number 160998, with its registered address at Korporaalweg 10, Willemstad, Curaçao and is licensed by the Curaçao Gaming Control Board to offer games of chance under license number OGL/2024/1337/0628. KIV’s payment agent company is River Card Limited, Cyprus company registration number HE 431566, with its registered address at 50 Spyrou Kyprianou Avenue, Irida Tower 3, Floor 6, 6057 Larnaca, Cyprus. Contact us at support@kiv.bet.
-      </footer>
     </div>
-  );
-}
+    
+    <div class="rating-container">
+      <h2 class="rating-title">Do it the best way...</h2>
+      <div class="stars">
+        <span class="star filled">&#9733;</span>
+        <span class="star filled">&#9733;</span>
+        <span class="star filled">&#9733;</span>
+        <span class="star filled">&#9733;</span>
+        <span class="star half">&#9733;</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>KIVbet is owned and operated by Natural Nine B.V., Curaçao company registration number 160998, with its registered address at Korporaalweg 10, Willemstad, Curaçao and is licensed by the Curaçao Gaming Control Board to offer games of chance under license number OGL/2024/1337/0628.</p>
+    <p>KIV’s payment agent company is River Card Limited, Cyprus company registration number HE 431566, with its registered address at 50 Spyrou Kyprianou Avenue, Irida Tower 3, Floor 6, 6057 Larnaca, Cyprus.</p>
+    <p>Contact us at <a href="mailto:support@kiv.bet">support@kiv.bet</a>.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
