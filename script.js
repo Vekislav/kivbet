@@ -1,39 +1,45 @@
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  if (!sidebar.classList.contains('hidden')) {
-    sidebar.classList.toggle('slim');
+// Countdown to May 5, 2025
+const daysElement = document.querySelector('#days .number');
+const hoursElement = document.querySelector('#hours .number');
+const minutesElement = document.querySelector('#minutes .number');
+const secondsElement = document.querySelector('#seconds .number');
+
+const targetDate = new Date('May 5, 2025 00:00:00').getTime();
+
+function animateNumberChange(from, to, element) {
+  let current = from;
+  const increment = to > from ? 1 : -1;
+  
+  function updateNumber() {
+    if (current === to) return;
+    current += increment;
+    element.innerHTML = String(current).padStart(2, '0');
+  }
+
+  const interval = setInterval(updateNumber, 50);
+  setTimeout(() => clearInterval(interval), Math.abs(to - from) * 50);
+}
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const timeRemaining = targetDate - now;
+
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+  // Animate number changes
+  animateNumberChange(parseInt(daysElement.innerHTML), days, daysElement);
+  animateNumberChange(parseInt(hoursElement.innerHTML), hours, hoursElement);
+  animateNumberChange(parseInt(minutesElement.innerHTML), minutes, minutesElement);
+  animateNumberChange(parseInt(secondsElement.innerHTML), seconds, secondsElement);
+
+  if (timeRemaining < 0) {
+    clearInterval(countdownInterval);
+    document.getElementById('countdown').innerHTML = "Countdown Ended";
   }
 }
 
-function adjustLayout() {
-  const sidebar = document.getElementById('sidebar');
-  const bottomNav = document.getElementById('bottomNav');
-
-  if (window.innerWidth <= 768) {
-    // Mobile or tablet
-    sidebar.classList.add('hidden');
-    bottomNav.style.display = 'flex';
-  } else {
-    // Desktop
-    sidebar.classList.remove('hidden');
-    bottomNav.style.display = 'none';
-  }
-}
-
-// Reset sidebar state after resize
-function resetSidebarState() {
-  const sidebar = document.getElementById('sidebar');
-  if (sidebar.classList.contains('slim') && window.innerWidth <= 768) {
-    sidebar.classList.remove('slim');
-  }
-}
-
-window.addEventListener('load', () => {
-  adjustLayout();
-  resetSidebarState();
-});
-
-window.addEventListener('resize', () => {
-  adjustLayout();
-  resetSidebarState();
-});
+const countdownInterval = setInterval(updateCountdown, 1000);
+updateCountdown();
